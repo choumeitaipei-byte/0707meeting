@@ -3,309 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>洲美扶輪社例會報名系統</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>洲美扶輪社 NO.634次例會暨第十四屆就職典禮 - 外賓報名系統</title>
     <style>
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
-        .rotary-blue { background-color: #003366; }
-        .rotary-gold { background-color: #D4AF37; }
-        .text-rotary-blue { color: #003366; }
-        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        [x-cloak] { display: none !important; }
-        
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 40, 80, 0.7), rgba(0, 40, 80, 0.8)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+        :root {
+            --primary-color: #0b3c5d; /* 皇家扶輪藍 */
+            --accent-color: #d9b310;  /* 典雅金 */
+            --bg-color: #f1f3f5;
+            --card-bg: #ffffff;
+            --text-color: #323232;
         }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        /* 海報與活動資訊大卡片 */
+        .poster-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-top: 6px solid var(--accent-color);
+        }
+        .poster-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .info-content {
+            padding: 25px;
+            background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+        }
+        .info-content h1 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 15px 0;
+        }
+        .event-details {
+            font-size: 15px;
+            color: #555;
+        }
+        .event-details p {
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        .event-details strong {
+            color: var(--primary-color);
+            min-width: 65px;
+            display: inline-block;
+        }
+        /* 輸入卡片樣式 */
+        .form-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            background-color: #fcfcfc;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: var(--accent-color);
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(217,179,16,0.15);
+        }
+        /* 單選鈕美化 */
+        .radio-box-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .radio-box-label {
+            border: 2px solid #e9e9e9;
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            display: block;
+            font-weight: bold;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+        .radio-box-label input {
+            display: none;
+        }
+        .radio-box-label:hover {
+            border-color: var(--accent-color);
+            background: #fffdf6;
+        }
+        /* 當被選取時的樣式改變 */
+        input[type="radio"]:checked + .radio-text {
+            color: var(--primary-color);
+        }
+        .radio-box-label:has(input[type="radio"]:checked) {
+            border-color: var(--primary-color);
+            background-color: #f4f8fa;
+            box-shadow: 0 4px 10px rgba(11,60,93,0.08);
+        }
+        /* 動態顯示區塊 */
+        .conditional-section {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-color), #051d2e);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(11,60,93,0.2);
+            transition: all 0.2s;
+        }
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(11,60,93,0.3);
         }
     </style>
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('bookingApp', () => ({
-                formData: {
-                    name: '',
-                    identity: '社友',
-                    inviter: '',
-                    mainCourseId: 1,
-                    drink: '熱咖啡',
-                    dessert: '蘋果派'
-                },
-                isSubmitting: false,
-                showResult: false,
-                resultText: '',
-                copied: false,
-                gasUrl: 'https://script.google.com/macros/s/AKfycbwjuwUQ-bX3O7eW4sOcgIwZBGvT7ls2wuCivgnFrTZNM4MJQKmUCo-WRosvFqJNm4Eh/exec',
-                identities: ['社友', '眷屬社友', '小扶輪', '來賓'],
-                mainCourses: [
-                    { id: 1, name: '香煎迷迭雞腿排', extra: 0, desc: 'Chicken Leg with Rosemary and Garlic' },
-                    { id: 2, name: '蘇黎士奶油雞佐蒜味飯', extra: 0, desc: 'Chicken with Cream Sauce and Garlic Rice' },
-                    { id: 3, name: '香煎豬排紅酒肝醬沙司', extra: 0, desc: 'Pork Schnitzel with Red Wine Liver Pate Sauce' },
-                    { id: 4, name: '海鱸魚佐奶油酸豆醬', extra: 60, desc: 'Seabass with Caper Butter Sauce' },
-                    { id: 5, name: '大透抽義大利麵', extra: 100, desc: 'Calamari Pasta with Tomato Sauce' },
-                    { id: 6, name: '香煎牛肩排佐黑胡椒醬', extra: 210, desc: 'Beef Steak with Black Pepper Sauce' }
-                ],
-                drinks: ['熱咖啡', '冰咖啡', '熱茶', '冰茶'],
-                desserts: ['蘋果派', '冰淇淋'],
-                
-                calculateTotal() {
-                    const baseFee = this.formData.identity === '來賓' ? 700 : 400;
-                    const selected = this.mainCourses.find(d => d.id == this.formData.mainCourseId);
-                    return baseFee + (selected ? selected.extra : 0);
-                },
-
-                async submitToGas() {
-                    if (!this.formData.name.trim()) return;
-                    if (this.formData.identity === '來賓' && !this.formData.inviter.trim()) {
-                        alert('來賓請填寫邀請人');
-                        return;
-                    }
-
-                    this.isSubmitting = true;
-                    const selected = this.mainCourses.find(d => d.id == this.formData.mainCourseId);
-                    const total = this.calculateTotal();
-                    const baseFee = this.formData.identity === '來賓' ? 700 : 400;
-
-                    const queryParams = new URLSearchParams({
-                        'Nickname': this.formData.name,
-                        '身分': this.formData.identity,
-                        '邀請人': this.formData.inviter || '無',
-                        '主餐選擇': selected.name,
-                        '飲品選擇': this.formData.drink,
-                        '甜點選擇': this.formData.dessert,
-                        '基礎費用': baseFee,
-                        '主餐加價': selected.extra,
-                        '應收總計': total
-                    });
-
-                    try {
-                        const finalUrl = `${this.gasUrl}?${queryParams.toString()}`;
-                        await fetch(finalUrl, { method: 'GET', mode: 'no-cors' });
-                        
-                        setTimeout(() => {
-                            this.generateLineFormat(selected, total);
-                            this.showResult = true;
-                            this.isSubmitting = false;
-                        }, 800);
-                    } catch (error) {
-                        this.generateLineFormat(selected, total);
-                        this.showResult = true;
-                        this.isSubmitting = false;
-                    }
-                },
-
-                generateLineFormat(selected, total) {
-                    let text = `【洲美扶輪社餐敘報名】\n` +
-                               `Nickname：${this.formData.name}\n` +
-                               `身分：${this.formData.identity}\n`;
-                    if (this.formData.identity === '來賓') text += `邀請人：${this.formData.inviter}\n`;
-                    text += `主餐選擇：${selected.name}\n` +
-                            `飲品選擇：${this.formData.drink}\n` +
-                            `甜點選擇：${this.formData.dessert}\n` +
-                            `預計現場自費：$${total} 元\n` +
-                            `-------------------\n` +
-                            `資料已自動同步至雲端試算表。\n` +
-                            `若有需要修改品項，請重新填寫並複製文字告知社辦。`;
-                    this.resultText = text;
-                },
-
-                copyToClipboard() {
-                    const copyText = document.getElementById("resultText");
-                    copyText.select();
-                    document.execCommand("copy");
-                    this.copied = true;
-                    setTimeout(() => { this.copied = false; }, 3000);
-                }
-            }));
-        });
-    </script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
-<body x-data="bookingApp" class="pb-12 text-slate-800">
+<body>
 
-    <header class="hero-bg text-white py-24 px-6 text-center shadow-lg mb-10">
-        <div class="max-w-4xl mx-auto">
-            <div class="inline-block bg-white text-rotary-blue font-bold px-5 py-1.5 rounded-full mb-6 text-xs tracking-widest uppercase shadow-xl">
-                ROTARY CLUB OF CHOUMEI
-            </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-wider drop-shadow-lg text-white">例會餐敘線上報名</h1>
-            <p class="text-xl md:text-2xl text-blue-100 opacity-95 font-light drop-shadow-md text-white">品味繽紛美食 共享扶輪時光</p>
-        </div>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4">
+<div class="container">
+    
+    <div class="poster-card">
+        <img src="0707.jpg" alt="活動海報" class="poster-img" onerror="this.style.display='none';">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="bg-white p-8 rounded-2xl card-shadow border-t-8 border-rotary-gold text-center transform transition hover:scale-105">
-                <div class="text-4xl mb-3">💰</div>
-                <h3 class="font-bold text-lg mb-2 text-rotary-blue uppercase tracking-wide">報名費用</h3>
-                <div class="text-slate-700 text-sm space-y-1 text-center mb-2">
-                    <p>社友/眷屬/小扶輪 <span class="font-bold text-xl text-rotary-blue">$400</span></p>
-                    <p>來賓自費 <span class="font-bold text-xl text-orange-600">$700</span></p>
-                </div>
-                <p class="text-xs text-orange-600 font-bold underline">社內補助 $300</p>
+        <div class="info-content">
+            <h1>洲美扶輪社 NO.634次例會<br>暨第十四屆就職典禮</h1>
+            <div class="divider"></div>
+            <div class="event-details">
+                <p><strong>💡 主題：</strong>在洲美，有你有我，有意思</p>
+                <p><strong>📅 時間：</strong>2026年07月07日 (二) 18:30 用餐聯誼 | 19:00 正式開始</p>
+                <p><strong>📍 地點：</strong>台北市商業會 (台北市南京東路二段72號6樓，捷運松江南京站1號出口)</p>
+                <p><strong>💵 費用：</strong>外賓註冊費 200 元</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl card-shadow border-t-8 border-rotary-gold text-center transform transition hover:scale-105 text-slate-800">
-                <div class="text-4xl mb-3">📅</div>
-                <h3 class="font-bold text-lg mb-2 text-rotary-blue uppercase tracking-wide">活動日期</h3>
-                <p class="text-slate-700 font-bold text-xl">5/26 (二)</p>
-                <p class="text-slate-600">18:30 - 20:30</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl card-shadow border-t-8 border-rotary-gold text-center transform transition hover:scale-105 text-slate-800">
-                <div class="text-4xl mb-3">📍</div>
-                <h3 class="font-bold text-lg mb-2 text-rotary-blue uppercase tracking-wide">活動地點</h3>
-                <p class="text-slate-700 font-bold text-xl">香宜德國料理</p>
-                <p class="text-slate-600">(Zum Fass)</p>
-            </div>
-        </div>
-
-        <div class="bg-blue-600 text-white p-5 mb-10 rounded-2xl shadow-md flex items-center">
-            <div class="mr-4 text-2xl text-white font-bold">🥗</div>
-            <p class="text-sm md:text-base font-medium text-white">
-                <strong>套餐均含：</strong> 沙拉、湯品、咖啡或茶（另加 10% 服務費）。
-            </p>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 md:p-12 card-shadow text-slate-800">
-            <form @submit.prevent="submitToGas()">
-                <div class="mb-10">
-                    <label class="block text-rotary-blue font-bold mb-4 text-xl flex items-center">
-                        <span class="bg-rotary-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold">1</span>
-                        請填寫Nickname
-                    </label>
-                    <input type="text" x-model="formData.name" placeholder="請輸入您的暱稱" required
-                           class="w-full px-6 py-5 rounded-2xl border-2 border-slate-100 focus:outline-none focus:border-blue-500 transition-all text-lg bg-slate-100 font-medium text-slate-700 shadow-sm">
-                </div>
-
-                <div class="mb-10">
-                    <label class="block text-rotary-blue font-bold mb-4 text-xl flex items-center">
-                        <span class="bg-rotary-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold">2</span>
-                        選擇身分
-                    </label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <template x-for="id in identities" :key="id">
-                            <label :class="formData.identity === id ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200 text-blue-800 shadow-md' : 'border-slate-100 bg-slate-100 hover:bg-slate-200 text-slate-600 shadow-sm'"
-                                   class="px-4 py-4 rounded-2xl text-center cursor-pointer font-bold transition-all text-base border-2 flex items-center justify-center">
-                                <input type="radio" name="identity" :value="id" x-model="formData.identity" class="hidden">
-                                <span x-text="id"></span>
-                            </label>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="mb-10" x-show="formData.identity === '來賓'" x-transition>
-                    <label class="block text-orange-600 font-bold mb-4 text-xl flex items-center text-orange-600">
-                        <span class="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold text-white font-bold">?</span>
-                        請填寫邀請人
-                    </label>
-                    <input type="text" x-model="formData.inviter" placeholder="請輸入邀請的社友姓名" :required="formData.identity === '來賓'"
-                           class="w-full px-6 py-5 rounded-2xl border-2 border-orange-100 focus:outline-none focus:border-orange-500 transition-all text-lg bg-orange-50 font-medium text-slate-700 shadow-inner">
-                </div>
-
-                <div class="mb-10">
-                    <label class="block text-rotary-blue font-bold mb-6 text-xl flex items-center">
-                        <span class="bg-rotary-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</span>
-                        選擇精選主餐
-                    </label>
-                    <div class="grid grid-cols-1 gap-4">
-                        <template x-for="dish in mainCourses" :key="dish.id">
-                            <label :class="formData.mainCourseId == dish.id ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200 shadow-md' : 'border-slate-100 bg-slate-100 hover:bg-slate-200 shadow-sm'"
-                                   class="relative flex items-center p-6 border-2 rounded-2xl cursor-pointer transition-all">
-                                <input type="radio" name="mainCourse" :value="dish.id" x-model="formData.mainCourseId" class="hidden">
-                                <div class="flex-1">
-                                    <span class="block font-bold text-slate-800 text-lg md:text-xl" x-text="dish.name"></span>
-                                    <span class="block text-sm text-slate-500 mt-1" x-text="dish.desc"></span>
-                                </div>
-                                <div class="text-right ml-4">
-                                    <span x-show="dish.extra === 0" class="text-green-600 font-bold text-sm bg-green-50 px-3 py-1 rounded-full border border-green-200">免加價</span>
-                                    <span x-show="dish.extra > 0" class="text-orange-600 font-bold text-sm bg-orange-50 px-3 py-1 rounded-full border border-orange-200" x-text="'+$' + dish.extra"></span>
-                                </div>
-                            </label>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="mb-10">
-                    <label class="block text-rotary-blue font-bold mb-6 text-xl flex items-center">
-                        <span class="bg-rotary-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold">4</span>
-                        選擇飲品
-                    </label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <template x-for="drink in drinks" :key="drink">
-                            <label :class="formData.drink === drink ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200 text-blue-800 shadow-md' : 'border-slate-100 bg-slate-100 hover:bg-slate-200 shadow-sm'"
-                                   class="px-4 py-5 rounded-2xl text-center cursor-pointer font-bold transition-all text-lg border-2 flex items-center justify-center">
-                                <input type="radio" name="drink" :value="drink" x-model="formData.drink" class="hidden">
-                                <span x-text="drink"></span>
-                            </label>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="mb-10">
-                    <label class="block text-rotary-blue font-bold mb-6 text-xl flex items-center">
-                        <span class="bg-rotary-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm font-bold">5</span>
-                        選擇甜點
-                    </label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <template x-for="dessert in desserts" :key="dessert">
-                            <label :class="formData.dessert === dessert ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200 text-blue-800 shadow-md' : 'border-slate-100 bg-slate-100 hover:bg-slate-200 shadow-sm'"
-                                   class="px-4 py-5 rounded-2xl text-center cursor-pointer font-bold transition-all text-lg border-2 flex items-center justify-center">
-                                <input type="radio" name="dessert" :value="dessert" x-model="formData.dessert" class="hidden">
-                                <span x-text="dessert"></span>
-                            </label>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-10 mb-12 text-white flex flex-col md:flex-row justify-between items-center shadow-2xl">
-                    <div class="text-center md:text-left mb-4 md:mb-0 text-white">
-                        <span class="text-blue-400 font-bold block mb-1 uppercase tracking-widest text-xs tracking-tighter">Total Amount</span>
-                        <span class="text-2xl font-medium">個人自費總額</span>
-                    </div>
-                    <div class="text-right text-white">
-                        <span class="text-6xl font-bold text-rotary-gold" x-text="'$' + calculateTotal()"></span>
-                        <span class="text-blue-300 ml-2">TWD</span>
-                    </div>
-                </div>
-
-                <button type="submit" :disabled="isSubmitting"
-                        class="w-full bg-gradient-to-b from-blue-700 to-rotary-blue text-white font-bold py-6 rounded-2xl text-2xl hover:from-blue-800 hover:to-blue-900 transition-all transform active:scale-95 shadow-xl font-bold">
-                    <span x-text="isSubmitting ? '傳送報名資料中...' : '送出報名'"></span>
-                </button>
-            </form>
-        </div>
-    </main>
-
-    <div x-show="showResult" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" style="display: none;">
-        <div class="bg-white rounded-[2rem] p-8 md:p-10 max-w-md w-full shadow-2xl relative" @click.away="showResult = false">
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center text-4xl shadow-xl border-4 border-white font-bold text-white">✓</div>
-            <p class="text-sm text-slate-500 mt-8 mb-6 text-center leading-relaxed">
-                報名成功！<br>
-                若有需要修改品項，請重新填寫並複製文字告知社辦。
-            </p>
-            <textarea id="resultText" x-model="resultText" readonly
-                      class="w-full h-52 p-6 bg-blue-50/50 rounded-3xl border-2 border-blue-100 text-sm mb-8 focus:outline-none leading-relaxed font-bold text-slate-700"></textarea>
-            
-            <div class="flex flex-col gap-3">
-                <button @click="copyToClipboard()" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl hover:bg-green-700 transition-all shadow-lg text-lg text-white font-bold">
-                    複製文字
-                </button>
-                <button @click="showResult = false" class="w-full text-slate-400 font-bold py-3 hover:text-slate-600 transition-all">
-                    關閉視窗
-                </button>
-            </div>
-            <p x-show="copied" x-transition class="text-center text-green-600 text-sm mt-4 font-bold">✓ 已成功複製到剪貼簿！</p>
         </div>
     </div>
 
-    <footer class="text-center py-16 text-slate-400 text-xs tracking-[0.2em]">
-        <p class="mb-3 uppercase font-black text-slate-300">Rotary Club of CHOUMEI</p>
-        <p>© 2024 行政服務團隊 精心規劃</p>
-    </footer>
+    <form id="registrationForm" action="YOUR_BACKEND_URL_HERE" method="POST">
+        
+        <div class="form-card">
+            <div class="form-group" style="margin-bottom:0;">
+                <label style="text-align: center;">請選擇您的身分開始填寫：</label>
+                <div class="radio-box-group">
+                    <label class="radio-box-label">
+                        <input type="radio" name="isRotarian" value="yes" onchange="toggleSections()" required>
+                        <span class="radio-text">扶輪社友</span>
+                    </label>
+                    <label class="radio-box-label">
+                        <input type="radio" name="isRotarian" value="no" onchange="toggleSections()">
+                        <span class="radio-text">一般來賓</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="rotarianSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label for="rotaryName">姓名</label>
+                <input type="text" id="rotaryName" name="rotaryName" class="form-control" placeholder="請填寫您的姓名">
+            </div>
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input type="text" id="nickname" name="nickname" class="form-control" placeholder="例如：Jerry">
+            </div>
+            <div class="form-group">
+                <label for="rotaryClub">所屬扶輪社</label>
+                <input type="text" id="rotaryClub" name="rotaryClub" class="form-control" placeholder="例如：台北洲美社">
+            </div>
+            <div class="form-group">
+                <label for="rotaryTitle">扶輪職稱</label>
+                <input type="text" id="rotaryTitle" name="rotaryTitle" class="form-control" placeholder="例如：社長 / PP / 社友">
+            </div>
+        </div>
+
+        <div id="guestSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label for="inviter">邀請人姓名</label>
+                <input type="text" id="inviter" name="inviter" class="form-control" placeholder="請填寫邀請您的洲美社友姓名">
+            </div>
+            <div class="form-group">
+                <label for="guestName">姓名</label>
+                <input type="text" id="guestName" name="guestName" class="form-control" placeholder="請填寫您的姓名">
+            </div>
+            <div class="form-group">
+                <label for="companyAndTitle">公司及職稱</label>
+                <input type="text" id="companyAndTitle" name="companyAndTitle" class="form-control" placeholder="例如：XX有限公司 總經理">
+            </div>
+        </div>
+
+        <div id="commonSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label>飲食習慣</label>
+                <div class="radio-box-group">
+                    <label class="radio-box-label">
+                        <input type="radio" name="diet" value="葷食" checked>
+                        <span class="radio-text">葷食</span>
+                    </label>
+                    <label class="radio-box-label">
+                        <input type="radio" name="diet" value="素食">
+                        <span class="radio-text">素食</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note">備註說明 (選填)</label>
+                <textarea id="note" name="note" class="form-control" rows="2" placeholder="如有其他特殊需求請在此註記"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">確認送出報名</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function toggleSections() {
+        const isRotarian = document.querySelector('input[name="isRotarian"]:checked').value;
+        const rotarianSection = document.getElementById('rotarianSection');
+        const guestSection = document.getElementById('guestSection');
+        const commonSection = document.getElementById('commonSection');
+        
+        const rotaryInputs = rotarianSection.querySelectorAll('input');
+        const guestInputs = guestSection.querySelectorAll('input');
+
+        if (isRotarian === 'yes') {
+            rotarianSection.style.display = 'block';
+            guestSection.style.display = 'none';
+            commonSection.style.display = 'block';
+            
+            rotaryInputs.forEach(input => input.required = true);
+            guestInputs.forEach(input => {
+                input.required = false;
+                input.value = '';
+            });
+        } else if (isRotarian === 'no') {
+            rotarianSection.style.display = 'none';
+            guestSection.style.display = 'block';
+            commonSection.style.display = 'block';
+            
+            guestInputs.forEach(input => input.required = true);
+            rotaryInputs.forEach(input => {
+                input.required = false;
+                input.value = '';
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
