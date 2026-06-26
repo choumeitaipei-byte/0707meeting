@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>洲美扶輪社 NO.634次例會暨第十四屆就職典禮 - 外賓報名系統</title>
+    <title>洲美扶輪社 NO.633次例會暨第十四屆就職典禮 - 外賓報名系統</title>
     <style>
         :root {
             --primary-color: #0b3c5d; /* 皇家扶輪藍 */
@@ -163,3 +163,154 @@
         .btn-submit:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(11,60,93,0.3);
+        }
+        /* 隱藏原生提交產生的 iframe（用於非同步送出資料） */
+        #hidden_iframe {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="poster-card">
+        <img src="0707.jpg" alt="活動海報" class="poster-img">
+        
+        <div class="info-content">
+            <h1>洲美扶輪社 NO.633次例會<br>暨第十四屆就職典禮</h1>
+            <div class="divider"></div>
+            <div class="event-details">
+                <p><strong>💡 主題：</strong>在洲美，有你有我，有意思</p>
+                <p><strong>📅 時間：</strong>2026年07月07日 (二) 18:30 用餐聯誼 | 19:00 正式開始</p>
+                <p><strong>📍 地點：</strong>台北市商業會 (台北市南京東路二段72號6樓，捷運松江南京站1號出口)</p>
+                <p><strong>💵 費用：</strong>外賓註冊費 200 元</p>
+            </div>
+        </div>
+    </div>
+
+    <form id="registrationForm" action="https://script.google.com/macros/s/AKfycbwjuwUQ-bX3O7eW4sOcgIwZBGvT7ls2wuCivgnFrTZNM4MJQKmUCo-WRosvFqJNm4Eh/exec" method="GET" target="hidden_iframe" onsubmit="showSuccessAlert()">
+        
+        <div class="form-card">
+            <div class="form-group" style="margin-bottom:0;">
+                <label style="text-align: center;">請選擇您的身分開始填寫：</label>
+                <div class="radio-box-group">
+                    <label class="radio-box-label">
+                        <input type="radio" name="isRotarian" value="yes" onchange="toggleSections()" required>
+                        <span class="radio-text">扶輪社友</span>
+                    </label>
+                    <label class="radio-box-label">
+                        <input type="radio" name="isRotarian" value="no" onchange="toggleSections()">
+                        <span class="radio-text">一般來賓</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="rotarianSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label for="rotaryName">姓名</label>
+                <input type="text" id="rotaryName" name="rotaryName" class="form-control" placeholder="請填寫您的姓名">
+            </div>
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input type="text" id="nickname" name="nickname" class="form-control" placeholder="例如：Jerry">
+            </div>
+            <div class="form-group">
+                <label for="rotaryClub">所屬扶輪社</label>
+                <input type="text" id="rotaryClub" name="rotaryClub" class="form-control" placeholder="例如：台北洲美社">
+            </div>
+            <div class="form-group">
+                <label for="rotaryTitle">扶輪職稱</label>
+                <input type="text" id="rotaryTitle" name="rotaryTitle" class="form-control" placeholder="例如：社長 / PP / 社友">
+            </div>
+        </div>
+
+        <div id="guestSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label for="inviter">邀請人姓名</label>
+                <input type="text" id="inviter" name="inviter" class="form-control" placeholder="請填寫邀請您的洲美社友姓名">
+            </div>
+            <div class="form-group">
+                <label for="guestName">姓名</label>
+                <input type="text" id="guestName" name="guestName" class="form-control" placeholder="請填寫您的姓名">
+            </div>
+            <div class="form-group">
+                <label for="companyAndTitle">公司及職稱</label>
+                <input type="text" id="companyAndTitle" name="companyAndTitle" class="form-control" placeholder="例如：XX有限公司 總經理">
+            </div>
+        </div>
+
+        <div id="commonSection" class="form-card conditional-section">
+            <div class="form-group">
+                <label>飲食習慣</label>
+                <div class="radio-box-group">
+                    <label class="radio-box-label">
+                        <input type="radio" name="diet" value="葷食" checked>
+                        <span class="radio-text">葷食</span>
+                    </label>
+                    <label class="radio-box-label">
+                        <input type="radio" name="diet" value="素食">
+                        <span class="radio-text">素食</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note">備註說明 (選填)</label>
+                <textarea id="note" name="note" class="form-control" rows="2" placeholder="如有其他特殊需求請在此註記"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">確認送出報名</button>
+        </div>
+
+    </form>
+</div>
+
+<iframe name="hidden_iframe" id="hidden_iframe"></iframe>
+
+<script>
+    function toggleSections() {
+        const isRotarian = document.querySelector('input[name="isRotarian"]:checked').value;
+        const rotarianSection = document.getElementById('rotarianSection');
+        const guestSection = document.getElementById('guestSection');
+        const commonSection = document.getElementById('commonSection');
+        
+        const rotaryInputs = rotarianSection.querySelectorAll('input');
+        const guestInputs = guestSection.querySelectorAll('input');
+
+        if (isRotarian === 'yes') {
+            rotarianSection.style.display = 'block';
+            guestSection.style.display = 'none';
+            commonSection.style.display = 'block';
+            
+            rotaryInputs.forEach(input => input.required = true);
+            guestInputs.forEach(input => {
+                input.required = false;
+                input.value = '';
+            });
+        } else if (isRotarian === 'no') {
+            rotarianSection.style.display = 'none';
+            guestSection.style.display = 'block';
+            commonSection.style.display = 'block';
+            
+            guestInputs.forEach(input => input.required = true);
+            rotaryInputs.forEach(input => {
+                input.required = false;
+                input.value = '';
+            });
+        }
+    }
+
+    // 成功報名後的彈出提示，並自動重整表單
+    function showSuccessAlert() {
+        setTimeout(function() {
+            alert('🎉 報名成功！期待您的蒞臨。');
+            document.getElementById('registrationForm').reset();
+            document.getElementById('rotarianSection').style.display = 'none';
+            document.getElementById('guestSection').style.display = 'none';
+            document.getElementById('commonSection').style.display = 'none';
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
